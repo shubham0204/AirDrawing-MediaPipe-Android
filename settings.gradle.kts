@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "MediaPipe Hands Demo"
-include ':app'
+include(":app")

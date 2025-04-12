@@ -5,7 +5,6 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 class BrushManager {
-
     private var newStrokeAdded = false
     private val strokes = ArrayList<BrushPath>()
     private var currentStroke = BrushPath()
@@ -21,26 +20,28 @@ class BrushManager {
 
     var isDrawing = false
 
-    fun nextPoints(positions : HandLandmarks, color : Color ) {
+    fun nextPoints(
+        positions: HandLandmarks,
+        color: Color,
+    ) {
         x1 = positions.middleFinger.x
         y1 = positions.middleFinger.y
         x2 = positions.index.x
         y2 = positions.index.y
-        distance = sqrt( ( x2 - x1 ).pow(2) + ( y2 - y1 ).pow(2) )
-        if( distance < fingerDrawingThreshold  ) {
-            midX = ( x1 + x2 ) / 2
-            midY = ( y1 + y2 ) / 2
-            if( newStrokeAdded && midX != 0.0f && midY != 0.0f ) {
-                currentStroke.start( midX , midY )
+        distance = sqrt((x2 - x1).pow(2) + (y2 - y1).pow(2))
+        if (distance < fingerDrawingThreshold) {
+            midX = (x1 + x2) / 2
+            midY = (y1 + y2) / 2
+            if (newStrokeAdded && midX != 0.0f && midY != 0.0f) {
+                currentStroke.start(midX, midY)
                 newStrokeAdded = false
             }
-            if( x2 != 0.0f && y2 != 0.0f ) {
+            if (x2 != 0.0f && y2 != 0.0f) {
                 isDrawing = true
-                addPointToStroke( midX , midY )
+                addPointToStroke(midX, midY)
             }
-        }
-        else {
-            strokes.add( currentStroke )
+        } else {
+            strokes.add(currentStroke)
             currentStroke = BrushPath()
             currentStroke.pathColor = color
             isDrawing = false
@@ -48,21 +49,19 @@ class BrushManager {
         }
     }
 
-    fun getAllStrokes() : List<BrushPath> {
-        return strokes
-    }
+    fun getAllStrokes(): List<BrushPath> = strokes
 
-    fun getCurrentStroke() : BrushPath {
-        return currentStroke
-    }
+    fun getCurrentStroke(): BrushPath = currentStroke
 
     fun clear() {
         strokes.clear()
         currentStroke.reset()
     }
 
-    private fun addPointToStroke( x : Float , y : Float ) {
-        currentStroke.addPoint( x , y )
+    private fun addPointToStroke(
+        x: Float,
+        y: Float,
+    ) {
+        currentStroke.addPoint(x, y)
     }
-
 }

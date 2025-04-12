@@ -1,1 +1,0 @@
-- Removed video and added GIF to `README.md`
